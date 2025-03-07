@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>365 Motivos para te Amar - Kuromi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <title>365 Motivos para te Amar</title>
     <style>
         body {
-            font-family: 'Fredoka One', cursive;
-            background-color: #1c1c1c;
-            color: #fff;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #2e1a47;
+            color: #ffffff;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -17,51 +16,43 @@
 
         h1 {
             margin-top: 20px;
-            color: #a855f7;
-            text-shadow: 3px 3px 5px #000;
+            color: #d100d1;
         }
 
         .calendar {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
             gap: 10px;
-            max-width: 800px;
+            max-width: 90%;
             margin: 20px auto;
+            padding: 10px;
         }
 
         .day {
-            background-color: #a855f7;
-            border: 2px solid #6b21a8;
-            border-radius: 10px;
+            background-color: #4b0082;
+            border: 2px solid #d100d1;
+            border-radius: 8px;
             padding: 15px;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-            opacity: 0.3;
-        }
-
-        .day.unlocked {
-            opacity: 1;
         }
 
         .day:hover {
-            background-color: #6b21a8;
-            color: #fff;
+            background-color: #8a2be2;
+            color: #ffffff;
         }
 
         #motivo {
             margin-top: 20px;
             padding: 20px;
-            background-color: #333;
-            border: 2px solid #a855f7;
+            background-color: #3a1b5c;
+            border: 2px solid #d100d1;
             border-radius: 10px;
-            display: inline-block;
-            box-shadow: 3px 3px 10px rgba(168, 85, 247, 0.5);
-        }
-
-        #motivo.hidden {
             display: none;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
     <script>
@@ -311,25 +302,26 @@
                 "Tenho paixão por tudo o que você faz, pela forma como você enxerga o mundo, pelo seu jeito único de existir.", 
                 "A tua beleza me impressiona cada dia mais.", 
                 "Você foi a melhor coisa que já me aconteceu!", 
-                "O seu abraço é o melhor abraço do mundo.",   ...Array.from({ length: 359 }, (_, i) => `Motivo especial número ${i + 7}`)
+                "O seu abraço é o melhor abraço do mundo.", 
+                ...Array.from({ length: 365 }, (_, i) => `Motivo incrível número ${i + 1}`)
             ];
-            
-            const hoje = new Date();
-            const diaDoAno = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / 86400000);
-            
+
             const calendario = document.querySelector(".calendar");
             const motivoEl = document.getElementById("motivo");
+            const dataAtual = new Date();
+            const diaAtual = Math.floor((dataAtual - new Date(dataAtual.getFullYear(), 0, 0)) / 86400000);
 
             for (let i = 1; i <= 365; i++) {
                 const day = document.createElement("div");
                 day.className = "day";
                 day.textContent = i;
-                
-                if (i <= diaDoAno) {
-                    day.classList.add("unlocked");
+                if (i > diaAtual) {
+                    day.style.opacity = "0.5";
+                    day.style.pointerEvents = "none";
+                } else {
                     day.addEventListener("click", () => {
                         motivoEl.textContent = motivos[i - 1] || "Motivo especial para você hoje!";
-                        motivoEl.classList.remove("hidden");
+                        motivoEl.style.display = "block";
                     });
                 }
                 calendario.appendChild(day);
@@ -340,6 +332,6 @@
 <body>
     <h1>365 Motivos para te Amar</h1>
     <div class="calendar"></div>
-    <div id="motivo" class="hidden"></div>
+    <div id="motivo"></div>
 </body>
 </html>
