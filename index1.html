@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>365 Motivos para te Amar - Kuromi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka One', cursive;
+            background-color: #1c1c1c;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #a855f7;
+            text-shadow: 3px 3px 5px #000;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .day {
+            background-color: #a855f7;
+            border: 2px solid #6b21a8;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0.3;
+        }
+
+        .day.unlocked {
+            opacity: 1;
+        }
+
+        .day:hover {
+            background-color: #6b21a8;
+            color: #fff;
+        }
+
+        #motivo {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border: 2px solid #a855f7;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 3px 3px 10px rgba(168, 85, 247, 0.5);
+        }
+
+        #motivo.hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const motivos = [
+            "Seu sorriso ilumina meu dia.",
+                "Você me inspira a ser melhor a cada dia.",
+                "O som da sua risada é a minha música favorita.",
+                "A forma como você cuida de mim.",
+                "Sua inteligência me fascina.",
+                "Seu abraço é o melhor lugar do mundo.",
+                "Você sempre sabe o que dizer para me animar.",
+                "Seu olhar me transmite paz.",
+                "Seu amor me dá forças para enfrentar qualquer coisa.",
+                "A maneira como você valoriza os pequenos momentos.",
+                "Nunca encontrei alguém tão perfeito para mim.",
+                "Sempre estarei ao seu lado.",
+                "Sua risada me encanta.",
+                "Amo cada dia que passo ao seu lado.",
+                "Você me faz sorrir todos os dias.",
+                "O quanto você é corajosa.",
+                "O jeito único que você sorri.",
+                "O brilho nos seus olhos quando está animada",
+                "Sua risada contagiante",
+                "Como você transforma dias ruins em dias melhores.",
+                "A forma como você me faz sentir seguro.",
+                "O jeito como você cuida de mim",
+                "Sua voz, que sempre me acalma.",
+                "A maneira como você enxerga o mundo.",
+                "Sua generosidade com os outros.",
+                "Como você é tão verdadeira.",
+                "A forma como você ilumina qualquer ambiente.",
+                "Sua paciência comigo.",
+                "Como você sempre ouve com atenção.",
+                "Seus pequenos gestos de gentileza.",
+                "O jeito que você me olha.",
+                "Seu lado sonhador.",
+                "Sua força em tempos difíceis.",
+                "Como você sempre tenta o seu melhor.",
+                "Seu carinho com os animais.",
+                "Como você sempre tenta o seu melhor.",
+                "Sua energia inspiradora.",
+                "Como você me encoraja a ser melhor.",
+                "Seu amor pela vida.",
+                "A forma como você é sincera.",
+                "Como você é tão espontânea.",
+                "Sua habilidade de ver o lado positivo.",
+                "Como você está sempre disposta a ajudar.",
+                "Sua inteligência impressionante.",
+                "Como você é tão carismática.",
+                "Como você se entrega ao amor.",
+                "O quanto você me entende.",
+                "Seu perfume.",
+                "Sua forma de dizer eu te amo sem usar palavras.",
+                "Como você faz piadas só para me ver rir.",
+                "Como você me faz sentir amado.",
+                "Seu jeito de escrever mensagens.",
+                "Como você presta atenção nos detalhes.",
+                "Seu olhar quando está concentrada.",
+                "O jeito como você segura a minha mão.",
+                "Sua paixão pelas coisas que ama.",
+                "O som da sua risada.",
+                "Sua personalidade calorosa.",
+                "Como você fica empolgada com novidades.",
+                "Seu jeito de contar histórias.",
+                "O quanto você se dedica ao que acredita.",
+                "Como você se preocupa comigo.",
+                "Sua habilidade de me fazer sentir especial.",
+                "O jeito que você brinca comigo.",
+                "Sua habilidade de resolver conflitos.",
+                "Seu talento em coisas únicas.",
+                "Como você ilumina os meus dias.",
+                "Seu amor por aventuras.",
+                "Como você é tão verdadeira com suas emoções.",
+                "Porque você é você.",
+                "A forma como você é tão especial para mim.",
+                "O quanto você é corajosa.",
+                "Como você enfrenta o medo.",
+                "Sua capacidade de ser única.",
+                "Como você transforma pequenos momentos em grandes memórias.",
+                "Sua humildade, mesmo sendo tão incrível.",
+                "O jeito que você defende o que é certo.",
+                "Sua paixão pelo futuro.",
+                "Como você faz eu me sentir mais forte.",
+                "O quanto você é confiável.",
+                "Como você sempre tem tempo para mim.",
+                "Apaixonado em tudo em você.",
+                "Eu amo a forma como você olha para mim.",
+                "Com você me sinto seguro.",
+                "Você é meu porto seguro.",
+                "Você faz o meu coração sorrir.",
+                "Você me conhece mais do que eu mesmo.",
+                "Você me faz sorrir quando ninguém mais consegue.",
+                "Eu sou 100% feliz quando estou ao seu lado.",
+                "Sinto saudades suas, mesmo quando você está no quarto do lado.",
+                "Você me ensinou o verdadeiro significado do amor.",
+                "Você cuida de mim quando estou passando mal.",
+                "Você sempre me inspira.",
+                "Meus olhos brilham quando olho para você.",
+                "Você é mais doce do que brigadeiro.",
+                "Você trata todos com gentileza.",
+                "Você me faz ser uma pessoa melhor.",
+                "Você tem uma voz calma e acolhedora.",
+                "Confiamos um no outro incondicionalmente.",
+                "Você me faz gargalhar mais do que qualquer outra pessoa.",
+                "Eu não consigo imaginar uma vida sem você.",
+                "Você conhece todos os meus segredos e os guarda com zelo.",
+                "Você se importa com o meu sucesso e a minha felicidade.",
+                "Você é dedicado e estudiosa.",
+                "Você sempre tem as melhores ideias para diversão.",
+                "Você sempre está perto quando preciso de um ombro para chorar.",
+                "Você é fofa quando está bravo.",
+                "Você é o minha melhor amiga.",
+                "Você é tudo que eu sempre quis, mas não sabia que precisava.",
+                "Você não tem medo de bancar o bobo para me fazer rir.",
+                "Você segura a minha mão no cinema.",
+                "Você coloca as minhas necessidades na frente das suas.",
+                "Seu lábios me derretem.",
+                "Seus abraços me confortam.",
+                "Seus beijos me deixam com as pernas bambas.",
+                "Você sempre acorda com um sorriso no rosto.",
+                "Você me faz rir, mesmo quando estou com vontade de chorar.",
+                "Você me entende, mesmo quando estou sendo irracional.",
+                "Você me aceita como sou.",
+                "Você sonha os meus sonhos comigo.",
+                "A vida é mais alegre ao seu lado.",
+                "Estamos conectados, mesmo quando estamos em uma multidão.",
+                "Você respeita os meus limites.",
+                "Você me mostrou o seu coração.",
+                "Você coloca tudo em perspectiva.",
+                "Quando vejo um princesa eu imagino você.",
+                "Mesmo quando estamos em uma sala cheia e trocamos olhares, sabemos o que o outro está pensando.",
+                "Você transformou a minha vida em um conto de fadas.",
+                "Você é vulnerável comigo.",
+                "O seu toque me alucina.",
+                "Você transforma a minha vida em uma aventura mágica.",
+                "Você me faz sentir como a única pessoa deste mundo.",
+                "Você me deixa escolher o filme que vamos assistir.",
+                "Você é o meu universo particular.",
+                "Cada sonho meu é um sonho com você.",
+                "Cada momento de dificuldade contigo é uma oportunidade de amadurecimento.",
+                "Você é a primeira pessoa que me vem à mente quando acordo.",
+                "A palavra beleza tem o significado do seu rosto.",
+                "Seu sorriso ilumina os meus dias mais sombrios.",
+                "Os seus olhos são a minha luz.",
+                "Um carinho seu é capaz de arrepiar até as pontas dos meus pés.",
+                "Você é o meu maior orgulho.",
+                "Em você encontro paz de espírito.",
+                "Desde o primeiro momento que te conheci, parecia que já te conhecia por toda a minha vida.",
+                "Você é o meu maior presente de Deus.",
+                "Quando estou em sua presença, todo ambiente fica perfeito.",
+                "Os seus lábios têm os sabores mais perfeitos.",
+                "Sua humildade me inspira.",
+                "Te amo por todos os momentos que compartilhamos juntos.",
+                "Por você ser meu: meu sol, meu tudo.",
+                "Você é calmaria em mares agitados.",
+                "Você sabe exatamente do que eu gosto.",   
+                "Você é uma ótima alternativa a um ursinho de pelúcia.",   
+                "Você torna qualquer sábado a noite inesquecível.",   
+                "Você dá esperança para minha vida.",   
+                "Você me dá coragem para cometer riscos.",   
+                "Você alegra todos os meus dias.",   
+                "Amo imaginar o que o futuro nos espera.",                    
+                "Você ama animaizinhos como eu.",   
+                "Você é o meu cobertor mais quentinho.",   
+                "Você atura as minhas manias.",   
+                "Amo acordar ao seu lado.",   
+                "Amo te dar bom dia",   
+                "Você não deixa que nada te coloque para baixo.",   
+                "Amo quando você me surpreende.",   
+                "Amo suas manias.",   
+                "Nos seus braços é onde me encontro mais feliz.",
+                "Você me dá os melhores conselhos.", 
+                "Porque serei sua até a eternidade.", 
+                "Com você, me sinto completo.", 
+                "Amo começar e terminar o dia com você.", 
+                "Amo o calor que você emana durante as noites frias.", 
+                "Amo o frescor dos seus lábios.", 
+                "Você demonstra o seu amor através dos seus gestos.", 
+                "Você é a pessoa que sempre sonhei ter ao meu lado.", 
+                "Você é uma paixão que arde em meu peito.", 
+                "Você segue ao meu lado, mesmo quando um temporal passa pela minha vida.", 
+                "Sinto que consigo vencer qualquer batalha ao seu lado.", 
+                "Nossa jornada de vida é sempre uma grande aventura.", 
+                "Você mudou a minha vida para melhor.", 
+                "Você nunca quis mudar a minha essência.", 
+                "Você coloca o mundo inteiro aos meus pés.", 
+                "Você me faz encarar a vida com mais otimismo.", 
+                "Você cruzou o meu caminho quando eu mais precisava.", 
+                "Você é a minha maior certeza na vida.", 
+                "Você me garante segurança, respeito e confiança.",
+                "Você é a mais linda dedicatória de amor que a vida me deu.", 
+                "Dentro de mim, um universo inteiro se expande por causa do seu amor.", 
+                "Apesar das diferenças, o amor que sentimos um pelo outro só cresce.", 
+                "Você é a razão de cada segundo da minha felicidade.", 
+                "Você é uma flecha que cortou o meu coração.", 
+                "Você é um lindo presente de Deus.", 
+                "Você é o mais precioso tesouro da minha vida.", 
+                "Com você, meu coração não mais me pertence, ele está em uma jornada dupla, onde o amor o preenche de alegria.", 
+                "Você é um anjo que protege a minha vida de qualquer mal.", 
+                "Você faz o meu coração acelerar e pular uma batida quando me olha.", 
+                "Nos mares da vida, você é o meu capitão.", 
+                "O seu olhar toca a minha alma.",
+                "Você sarou todas as feridas do meu coração.", 
+                "Você é a minha super-heróina.", 
+                "Enquanto você estiver ao meu lado, eu sei que meu mundo será perfeito.", 
+                "O seu amor floresce o meu coração com as mais belas flores.", 
+                "Com você, sinto que tenho 100% da sua atenção.", 
+                "Você me elogia como ninguém.", 
+                "Você não deixa dúvidas de que me ama.", 
+                "Você faz com que eu vá dormir com um sorriso estampado no rosto todos os dias.", 
+                "Você me enxerga como eu sou de verdade.", 
+                "Você entende e respeita os meus defeitos.", 
+                "Você é a saudade que eu gosto de sentir.",
+                "O meu coração está sempre hidratado de afeto quando estou com você.", 
+                "Mudam as estações e o meu amor por você só cresce.", 
+                "Eu encontro alegria na sua alegria.", 
+                "Minha vida é marcada por momentos ao seu lado.", 
+                "Nosso amor não é perfeito, mas com certeza é verdadeiro.", 
+                "Seus beijos são doces como mel.", 
+                "Você representa as melhores notas de uma música.", 
+                "Seus detalhes são perfeitos.", 
+                "A sua frequência me faz vibrar.", 
+                "Você me salvou de inúmeras maneiras.", 
+                "Dentro de mim existem centenas de pedaços seus.", 
+                "Te amo com a intensidade de um cometa.", 
+                "Cada reencontro nosso é doce como sobremesa.", 
+                "Você sintoniza a minha vida com a mais bela frequência do teu ser.", 
+                "Seu amor é sutil, mas eficaz.", 
+                "Você faz da minha vida um lugar bem melhor para se viver.", 
+                "Saber que você existe me motiva a acordar todas as manhãs.", 
+                "Você me cativa todos os dias.", 
+                "Você me faz sentir mais especial, apenas estando ao seu lado.", 
+                "Você é música da melhor qualidade, é poesia com rima, é verão com mar. Você é tudo de bom.", 
+                "Sempre sonhei em encontrar alguém especial na minha vida, mas você superou qualquer expectativa!", 
+                "Sempre fico hipnotizado pela sua beleza.", 
+                "Você é mais belo que um pôr-do-sol em Noronha.", 
+                "Eu amo olhar o mundo por meio dos seus olhos!", 
+                "Você me faz rir até a minha bochecha doer.",
+                "Ao seu lado, cada momento é único.", 
+                "Você me deixa maluca. Mas é uma loucura que vale a pena ser sentida.", 
+                "Você sorri com a alma e isso me traz alegria.", 
+                "É maravilhoso olhar para você.", 
+                "Você é a inspiração que move as minhas manhãs.", 
+                "De todas as pessoas incríveis desse mundo, eu tive sorte de encontrar a melhor de todas.", 
+                "Sua beleza é maior do que a de qualquer flor em um jardim.", 
+                "Tenho paixão por tudo o que você faz, pela forma como você enxerga o mundo, pelo seu jeito único de existir.", 
+                "A tua beleza me impressiona cada dia mais.", 
+                "Você foi a melhor coisa que já me aconteceu!", 
+                "O seu abraço é o melhor abraço do mundo.",   ...Array.from({ length: 359 }, (_, i) => `Motivo especial número ${i + 7}`)
+            ];
+            
+            const hoje = new Date();
+            const diaDoAno = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / 86400000);
+            
+            const calendario = document.querySelector(".calendar");
+            const motivoEl = document.getElementById("motivo");
+
+            for (let i = 1; i <= 365; i++) {
+                const day = document.createElement("div");
+                day.className = "day";
+                day.textContent = i;
+                
+                if (i <= diaDoAno) {
+                    day.classList.add("unlocked");
+                    day.addEventListener("click", () => {
+                        motivoEl.textContent = motivos[i - 1] || "Motivo especial para você hoje!";
+                        motivoEl.classList.remove("hidden");
+                    });
+                }
+                calendario.appendChild(day);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>365 Motivos para te Amar</h1>
+    <div class="calendar"></div>
+    <div id="motivo" class="hidden"></div>
+</body>
+</html>
